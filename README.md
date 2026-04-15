@@ -1,118 +1,47 @@
-# Stellar Notes DApp
+📝 Soroban Smart Notes App
+📖 Application Description
+Soroban Smart Notes is a decentralized CRUD (Create, Read, Update, Delete) application built natively on the Stellar network using the Soroban smart contract ecosystem. Designed as a capstone project for the Rise In: Build on Stellar Bootcamp - Telkom University, this application allows users to securely create, read, modify, and delete personal notes immutably stored on the blockchain.
 
-**Stellar Notes DApp** - Blockchain-Based Decentralized Note-Taking System
+By moving away from basic workshop examples, this contract demonstrates a fundamental understanding of Soroban's state management, custom struct definitions, and deterministic pseudo-random number generation (PRNG) for unique record identification.
 
-## Project Description
+✨ Core Features
+Create Note: Generates a new note with a secure, auto-generated random ID using Soroban's native PRNG (env.prng().gen()) and stores it on the ledger.
 
-Stellar Notes DApp is a decentralized smart contract solution built on the Stellar blockchain using Soroban SDK. It provides a secure, immutable platform for managing personal notes directly on the blockchain. The contract ensures that your data is stored transparently and is only manageable through predefined smart contract functions, eliminating reliance on centralized database providers.
+Read Notes: Retrieves all existing notes stored within the contract's instance storage seamlessly.
 
-The system allows users to create, view, and delete notes, leveraging the efficiency and security of the Stellar network. Each note is uniquely identified and stored within the contract's instance storage, ensuring data persistence and reliability.
+Update Note: Allows modification of an existing note's title and content by finding its specific ID and updating the storage state.
 
-## Project Vision
+Delete Note: Enables the removal of a specific note from the blockchain using its unique ID, preventing ledger bloat.
 
-Our vision is to revolutionize personal productivity in the digital age by:
+🔗 Smart Contract Deployment Details
+The smart contract binaries were developed using the soroban.studio cloud IDE, optimized for the WebAssembly target, and successfully deployed to the Stellar Testnet infrastructure.
 
-- **Decentralizing Data**: Moving note-taking from centralized servers to a global, distributed blockchain
-- **Ensuring Ownership**: Empowering users to have complete control and ownership over their digital thoughts and information
-- **Guaranteeing Immutability**: Providing a permanent, tamper-proof record of notes that cannot be altered or deleted by third parties
-- **Enhancing Privacy**: Leveraging blockchain security to protect personal information from unauthorized access
-- **Building Trustless Systems**: Creating a platform where data integrity is guaranteed by code, not by company promises
+Network Environment: Stellar Testnet (Test SDF Network ; September 2015)
 
-We envision a future where digital information is truly personal and sovereign, empowering individuals with complete autonomy over their digital assets.
+Smart Contract ID: <YOUR_CONTRACT_ID_HERE> (e.g., C...)
 
-## Key Features
+Deployer Account: <YOUR_SOURCE_ACCOUNT_ADDRESS_HERE>
 
-### 1. **Simple Note Creation**
+💻 Testnet Execution & CLI UI Screenshot
+(The following screenshot demonstrates the operational state verification and state mutations via the Stellar CLI remote procedure call interface executed directly from a Linux bash terminal on soroban.studio).
 
-- Create notes with just one function call
-- Specify title and content for each note
-- Automated ID generation for unique identification
-- Persistent storage on the Stellar blockchain
+!(./assets/screenshot.png)
 
-### 2. **Efficient Data Retrieval**
+(Note for the Developer before committing: Execute a successful stellar contract invoke command traversing the CRUD functions on your soroban.studio terminal, take a clear screenshot of the output, and save it exactly as screenshot.png inside an assets/ subdirectory).
 
-- Fetch all stored notes in a single call
-- Structured data representation for easy frontend integration
-- Quick access to your entire note collection
-- Real-time synchronization with the blockchain state
+🛠️ Build & Deployment Instructions (Linux / soroban.studio environment)
+1. Toolchain Prerequisites
+Ensure the environment possesses the correct Rust compiler target and the unified Stellar CLI:
 
-### 3. **Secure Deletion**
-
-- Remove specific notes using their unique IDs
-- Permanent removal from the contract storage
-- Clean and efficient storage management
-- Immediate update of the note list after deletion
-
-### 4. **Transparency and Security**
-
-- View all note activities on the blockchain
-- Blockchain-based verification of all storage actions
-- Immutable records of note creation and deletion
-- Protected against unauthorized modifications
-
-### 5. **Stellar Network Integration**
-
-- Leverages the high speed and low cost of Stellar
-- Built using the modern Soroban Smart Contract SDK
-- Scalable architecture for growing note collections
-- Interoperable with other Stellar-based services
-
-## Contract Details
-
-- Contract Address: CBLU4IUASQ4WUMOXBFLZRSBBLILGOH33GS4LUPKFBCCCMJCDQNMF7G2M
-  ![alt text](screenshot.png)
-
-## Future Scope
-
-### Short-Term Enhancements
-
-1. **Note Encryption**: Support for end-to-end encryption of note content for enhanced privacy
-2. **Category Management**: Add tags and categories to organize notes efficiently
-3. **Rich Text Support**: Extend support beyond plain text to include Markdown and formatted content
-4. **Search Functionality**: Implement advanced search filters for large note collections
-
-### Medium-Term Development
-
-5. **Collaborative Notes**: Implement multi-signature requirements for shared or collaborative note-taking
-   - Shared access for multiple addresses
-   - Permission-based editing and viewing
-   - Version history tracking
-6. **Notification System**: Off-chain bridge to alert users of new updates or shared notes
-7. **Asset Attachment**: Capability to attach digital assets or tokens to specific notes
-8. **Inter-Contract Integration**: Allow other smart contracts to interact with and store data in the notes contract
-
-### Long-Term Vision
-
-9. **Cross-Chain Synchronization**: Extend note storage to multiple blockchain networks
-10. **Decentralized UI Hosting**: Host the frontend on IPFS or similar decentralized platforms
-11. **AI-Powered Summarization**: Optional integration with AI to help users summarize their notes
-12. **Privacy Layers**: Implement zero-knowledge proofs for completely private note content
-13. **DAO Governance**: Community-driven protocol improvements and feature prioritization
-14. **Identity Management**: Integration with decentralized identity (DID) systems for user management
-
-### Enterprise Features
-
-15. **Corporate Documentation**: Adapt the system for secure corporate record-keeping
-16. **Immutable Logging**: Create time-locked logs for audit purposes
-17. **Automated Reporting**: Automatic note triggers for periodic reporting
-18. **Multi-Language Support**: Expand accessibility with internationalization
-
----
-
-## Technical Requirements
-
-- Soroban SDK
-- Rust programming language
-- Stellar blockchain network
-
-## Getting Started
-
-Deploy the smart contract to Stellar's Soroban network and interact with it using the three main functions:
-
-- `create_note()` - Create a new note with a title and content
-- `get_notes()` - Retrieve all stored notes from the contract
-- `delete_note()` - Remove a specific note by its ID
-
----
-
-**Stellar Notes DApp** - Securing Your Thoughts on the Blockchain
+Bash
+rustup target add wasm32-unknown-unknown
+cargo install --locked stellar-cli --features opt
+2. Contract Compilation & Optimization
+Bash
+stellar contract build
+3. Execution & Deployment to Testnet
+Bash
+stellar contract deploy \
+  --wasm target/wasm32-unknown-unknown/release/notes_contract.wasm \
+  --source-account <your_funded_account> \
+  --network testnet
